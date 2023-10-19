@@ -1,7 +1,8 @@
-import React from 'react'
+'use client'
 import { Container } from '../Container';
 import { Logo } from './Logo/Logo';
 import { Search } from './Search/Search';
+import { UserMenu } from './UserMenu/UserMenu';
 
 
 export const Navbar = () => {
@@ -11,7 +12,8 @@ export const Navbar = () => {
             <Container>
                 <div className='flex flex-row items-center justify-between gap-3 md:gap-0'>
                     <Logo/>
-                     <Search/>   
+                     <Search/> 
+                     <UserMenu/>  
                 </div>
             </Container>
         </div>
