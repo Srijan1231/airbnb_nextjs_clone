@@ -6,6 +6,8 @@ import { Navbar } from "./components/Navbar/Navbar";
 
 import { RegisterModal } from "./components/Modal/RegisterModal";
 import { ToasterProvider } from "./providers/ToasterProvider";
+import { LoginModal } from "./components/Modal/LoginModal";
+import getCurrentUser from "./actions/getCurrentUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,17 +18,19 @@ export const metadata: Metadata = {
 const font = Nunito({
   subsets: ["latin"],
 });
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
   return (
     <html lang="en">
       <body className={inter.className}>
         <ToasterProvider />
-        <Navbar />
+        <Navbar currentUser={currentUser} />
         <RegisterModal />
+        <LoginModal />
         {children}
       </body>
     </html>
