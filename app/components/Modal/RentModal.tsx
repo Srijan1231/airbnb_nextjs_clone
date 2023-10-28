@@ -10,6 +10,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import { CountrySelect } from "../Inputs/CountrySelect";
 
 import dynamic from "next/dynamic";
+import { Counter } from "../Inputs/Counter";
+import { ImageUpload } from "../Inputs/ImageUpload";
 
 enum STEPS {
   CATEGORY = 0,
@@ -37,6 +39,7 @@ export const RentModal = () => {
       category: "",
       location: null,
       guestCount: 1,
+      roomCount: 1,
       bathroomCount: 1,
       imageSrc: [],
       price: 1,
@@ -46,7 +49,9 @@ export const RentModal = () => {
   });
   const category = watch("category");
   const location = watch("location");
-
+  const guestCount = watch("guestCount");
+  const roomCount = watch("roomCount");
+  const bathroomCount = watch("bathroomCount");
   const Map = useMemo(
     () => dynamic(() => import("../Map"), { ssr: false }),
     [location]
@@ -108,6 +113,48 @@ export const RentModal = () => {
           onChange={(value) => setCustomValue("location", value)}
         />
         <Map center={location?.latlng} />
+      </div>
+    );
+  }
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Share some basic about your place"
+          subtitle="What amenities do you have?"
+        />
+        <Counter
+          value={guestCount}
+          onChange={(value) => setCustomValue("guestCount", value)}
+          title="Guest"
+          subtitle="How many guests do you allow?"
+        />
+        <hr />
+        <Counter
+          value={roomCount}
+          onChange={(value) => setCustomValue("roomCount", value)}
+          title="Rooms"
+          subtitle="How many rooms do you have?"
+        />
+        <hr />
+
+        <Counter
+          value={bathroomCount}
+          onChange={(value) => setCustomValue("bathroomCount", value)}
+          title="Bathrooms"
+          subtitle="How many bathrooms do you have?"
+        />
+      </div>
+    );
+  }
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add a photo of your place"
+          subtitle="Show guests what your place looks like!"
+        />
+        <ImageUpload />
       </div>
     );
   }
